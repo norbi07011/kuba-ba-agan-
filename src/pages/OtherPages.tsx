@@ -27,7 +27,7 @@ export const SchedulePage: React.FC<PageProps> = ({ go }) => {
         imgPos="55% 40%"
         imgAlt="Zawodnik przy sztandze na treningu siłowym"
         intro="Sala działa od poniedziałku do soboty. Na wykresie od razu widzisz dzisiejszy dzień i aktualną godzinę w Lelystad – wiesz, czy jeszcze zdążysz na trening, zanim wyjdziesz z domu."
-        meta={[{ k: 'Pon–Pt', v: '11:00–19:00' }, { k: 'Sobota', v: '11:00–14:00' }, { k: 'Teraz', v: st.open ? 'Otwarte' : 'Zamknięte' }]}
+        meta={[{ k: 'Pon–Pt', v: '11:00–20:30' }, { k: 'Ostatni trening', v: 'start 19:00' }, { k: 'Sobota', v: '11:00–14:00' }, { k: 'Teraz', v: st.open ? 'Otwarte' : 'Zamknięte' }]}
       />
       <Schedule />
       <section aria-labelledby="planuj" className="pb-24 sm:pb-32">

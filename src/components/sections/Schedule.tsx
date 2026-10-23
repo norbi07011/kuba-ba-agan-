@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CountUp, Reveal } from '../fx/ScrollFx';
-import { HOURS, nowInLelystad, openStatus } from '../../data/site';
+import { HOURS, hm, nowInLelystad, openStatus } from '../../data/site';
 
 const AXIS_FROM = 9, AXIS_TO = 21;
 const pct = (h: number) => ((h - AXIS_FROM) / (AXIS_TO - AXIS_FROM)) * 100;
@@ -22,7 +22,7 @@ export const Schedule: React.FC = () => {
           <dl className="grid grid-cols-2 gap-px overflow-hidden border border-white/10 bg-white/10 lg:grid-cols-4">
             {[
               { n: 6, s: '', label: 'dni treningowych w tygodniu' },
-              { n: weeklyHours, s: ' h', label: 'otwartej sali co tydzień' },
+              { n: Math.floor(weeklyHours), s: '+ h', label: 'otwartej sali co tydzień' },
               { n: 3, s: '', label: 'dyscypliny: boks, kickboxing, crossfit' },
               { n: 2, s: '', label: 'formaty personalne: 1vs1 i 2vs1' },
             ].map(x => (
@@ -72,7 +72,7 @@ export const Schedule: React.FC = () => {
                           <span className={`cond block text-[17px] font-bold uppercase tracking-[.08em] ${today ? 'text-white' : 'text-steel'}`}>
                             <span className="hidden sm:inline">{d.label}</span><span className="sm:hidden">{d.short}</span>
                           </span>
-                          <span className="mono text-[12px] text-steel-dim">{d.open ? `${d.open[0]}:00–${d.open[1]}:00` : 'zamknięte'}{today ? ' · dziś' : ''}</span>
+                          <span className="mono text-[12px] text-steel-dim">{d.open ? `${hm(d.open[0])}–${hm(d.open[1])}${d.last ? ` · ostatni start ${hm(d.last)}` : ''}` : 'zamknięte'}{today ? ' · dziś' : ''}</span>
                         </th>
                         <td className="py-4 align-middle">
                           <div className="relative h-9 bg-white/[.03]">

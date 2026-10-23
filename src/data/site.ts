@@ -13,13 +13,16 @@ export const SITE = {
   maps: 'https://www.google.com/maps/search/?api=1&query=Brugplein+2%2C+8223+AJ+Lelystad',
 };
 
-/** Godziny otwarcia (0 = niedziela). `null` = zamknięte. */
-export const HOURS: { day: number; label: string; short: string; open: [number, number] | null }[] = [
-  { day: 1, label: 'Poniedziałek', short: 'Pon', open: [11, 19] },
-  { day: 2, label: 'Wtorek', short: 'Wt', open: [11, 19] },
-  { day: 3, label: 'Środa', short: 'Śr', open: [11, 19] },
-  { day: 4, label: 'Czwartek', short: 'Czw', open: [11, 19] },
-  { day: 5, label: 'Piątek', short: 'Pt', open: [11, 19] },
+/** Godzina jako tekst: 20.5 -> "20:30", 11 -> "11:00". */
+export const hm = (h: number) => `${Math.floor(h)}:${String(Math.round((h % 1) * 60)).padStart(2, '0')}`;
+
+/** Godziny otwarcia (0 = niedziela). `open` = otwarcie i koniec ostatniego treningu, `last` = start ostatniego treningu. `null` = zamknięte. */
+export const HOURS: { day: number; label: string; short: string; open: [number, number] | null; last?: number }[] = [
+  { day: 1, label: 'Poniedziałek', last: 19, short: 'Pon', open: [11, 20.5] },
+  { day: 2, label: 'Wtorek', last: 19, short: 'Wt', open: [11, 20.5] },
+  { day: 3, label: 'Środa', last: 19, short: 'Śr', open: [11, 20.5] },
+  { day: 4, label: 'Czwartek', last: 19, short: 'Czw', open: [11, 20.5] },
+  { day: 5, label: 'Piątek', last: 19, short: 'Pt', open: [11, 20.5] },
   { day: 6, label: 'Sobota', short: 'Sob', open: [11, 14] },
   { day: 0, label: 'Niedziela', short: 'Ndz', open: null },
 ];
@@ -38,7 +41,7 @@ export const openStatus = () => {
   const { day, hour } = nowInLelystad();
   const today = HOURS.find(h => h.day === day)!;
   if (today.open && hour >= today.open[0] && hour < today.open[1]) {
-    return { open: true, text: `Otwarte teraz · do ${today.open[1]}:00` };
+    return { open: true, text: today.last && hour < today.last ? `Otwarte teraz · do ${hm(today.open[1])}` : `Otwarte · trwa ostatni trening do ${hm(today.open[1])}` };
   }
   // najbliższe otwarcie
   for (let k = 0; k < 8; k++) {
@@ -47,9 +50,10 @@ export const openStatus = () => {
     if (!h.open) continue;
     if (k === 0 && hour >= h.open[0]) continue;
     const when = k === 0 ? 'dziś' : k === 1 ? 'jutro' : h.label.toLowerCase();
-    return { open: false, text: `Zamknięte · otwieramy ${when} o ${h.open[0]}:00` };
+    return { open: false, text: `Zamknięte · otwieramy ${when} o ${hm(h.open[0])}` };
   }
   return { open: false, text: 'Zamknięte' };
 };
 
 export const waLink = (text: string) => `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`;
+

@@ -61,7 +61,7 @@ export const Contact: React.FC = () => {
             </div>
             <div>
               <dt className="eyebrow">Godziny</dt>
-              <dd className="mono mt-2 text-[15px] leading-7 text-white">Pon–Pt 11:00–19:00<br />Sob 11:00–14:00<br /><span className="text-steel-dim">Ndz zamknięte</span></dd>
+              <dd className="mono mt-2 text-[15px] leading-7 text-white">Pon–Pt 11:00–20:30<br /><span className="text-steel-dim">ostatni trening startuje o 19:00</span><br />Sob 11:00–14:00<br /><span className="text-steel-dim">Ndz zamknięte</span></dd>
             </div>
             <div>
               <dt className="eyebrow">Social media</dt>
