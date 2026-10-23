@@ -46,3 +46,6 @@ Treści (dyscypliny, przebieg treningu, wartości, manifest): `src/data/content.
   setAppliedPromo({ code, discount: Number((total * 0.10).toFixed(2)) });
 ```
 Kod jest wielkość-liter-obojętny (koszyk zamienia wpis na wielkie litery), więc zadziała też „balagankuba”.
+
+## Zdjęcia
+`src/assets/photos/` – sesja klubu (webp). Przypisanie do sekcji: `IMG` w `src/data/content.ts`.

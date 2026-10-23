@@ -2,7 +2,7 @@ import React from 'react';
 import { Parallax, Reveal, TiltCard } from '../fx/ScrollFx';
 import { KineticText } from '../fx/Kinetic';
 import { SITE } from '../../data/site';
-import coachKid from '../../assets/media/coach-kid.jpg';
+import coachKid from '../../assets/photos/mitts-boks.webp';
 import teamRing from '../../assets/media/team-ring.jpg';
 import teamMat from '../../assets/media/team-mat.jpg';
 import poster from '../../assets/media/poster.jpg';
@@ -14,7 +14,7 @@ export const Coach: React.FC = () => (
       <Reveal className="relative">
         <div className="relative aspect-[4/5] max-w-full overflow-hidden border border-white/10">
           <Parallax speed={90} className="absolute -inset-y-[12%] inset-x-0">
-            <img src={coachKid} alt="Trener Bałagan Team trzyma tarcze, młody zawodnik w gardzie" loading="lazy" className="h-full w-full object-cover" style={{ objectPosition: '62% 50%' }} />
+            <img src={coachKid} alt="Trener Kuba trzyma tarcze, zawodnik zadaje cios" loading="lazy" className="h-full w-full object-cover" style={{ objectPosition: '50% 30%' }} />
           </Parallax>
           <div aria-hidden className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 60%, rgba(11,9,9,.85))' }} />
           <p className="cond absolute bottom-5 left-5 right-5 text-[14px] font-semibold uppercase tracking-[.14em] text-steel">Trening na tarczach · praca 1vs1</p>

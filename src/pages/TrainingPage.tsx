@@ -124,7 +124,7 @@ export const TrainingPage: React.FC<PageProps> = ({ go }) => (
     <section aria-labelledby="pierwszy" className="py-24 sm:py-32">
       <div className="wrap grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
         <ImageReveal className="aspect-[4/3] w-full max-w-full border border-white/10" from="left">
-          <Duo src={IMG.teamRing} alt="Ekipa Bałagan Team w rękawicach przy ringu" pos="50% 40%" className="h-full w-full" />
+          <Duo src={IMG.wraps} alt="Owijanie dłoni przed pierwszym treningiem" pos="50% 35%" mono={false} className="h-full w-full" />
         </ImageReveal>
         <div>
           <SectionTitle id="pierwszy" eyebrow="Jak zacząć" a="Pierwszy trening" b="w 3 krokach" />

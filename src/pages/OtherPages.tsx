@@ -23,8 +23,8 @@ export const SchedulePage: React.FC<PageProps> = ({ go }) => {
         title="Godziny"
         accent="otwarcia"
         bgWord="GRAFIK"
-        img={IMG.crossfit}
-        imgPos="55% 40%"
+        img={IMG.ropes}
+        imgPos="35% 40%"
         imgAlt="Zawodnik przy sztandze na treningu siłowym"
         intro="Sala działa od poniedziałku do soboty. Na wykresie od razu widzisz dzisiejszy dzień i aktualną godzinę w Lelystad – wiesz, czy jeszcze zdążysz na trening, zanim wyjdziesz z domu."
         meta={[{ k: 'Pon–Pt', v: '11:00–20:30' }, { k: 'Ostatni trening', v: 'start 19:00' }, { k: 'Sobota', v: '11:00–14:00' }, { k: 'Teraz', v: st.open ? 'Otwarte' : 'Zamknięte' }]}
@@ -88,7 +88,7 @@ export const CoachPage: React.FC<PageProps> = ({ go }) => (
       title="Ludzie"
       accent="Bałagan Team"
       bgWord="TRENER"
-      img={IMG.logo}
+      img={IMG.portrait}
       imgPos="50% 30%"
       imgAlt="Trener Kuba z założonymi rękami na tle godła Bałagan Team"
       intro="Za każdym treningiem stoi człowiek, który zna Twoje imię, Twoje słabe strony i Twój cel. Poznaj trenera i ekipę, z którą będziesz pocić się na macie – od pierwszej rozgrzewki po ostatnią rundę."
@@ -121,10 +121,13 @@ export const CoachPage: React.FC<PageProps> = ({ go }) => (
     >
       {[
         { src: IMG.teamRing, alt: 'Zawodnicy Bałagan Team pozują przed ringiem w rękawicach', pos: '50% 40%', w: 'w-[86vw] sm:w-[60vw] lg:w-[46vw]', mono: true, cap: 'Przed ringiem' },
-        { src: IMG.boxer, alt: 'Bokser w rękawicach Bałagan Team', pos: '40% 30%', w: 'w-[70vw] sm:w-[34vw] lg:w-[26vw]', mono: false, cap: 'Garda' },
+        { src: IMG.portrait, alt: 'Trener Kuba trzyma tarcze', pos: '50% 30%', w: 'w-[70vw] sm:w-[34vw] lg:w-[26vw]', mono: false, cap: 'Tarcze' },
+        { src: IMG.coachTalk, alt: 'Trener tłumaczy technikę zawodnikom', pos: '50% 40%', w: 'w-[86vw] sm:w-[56vw] lg:w-[42vw]', mono: false, cap: 'Rada w narożniku' },
+        { src: IMG.kidsTalk, alt: 'Trener rozmawia z grupą dzieci', pos: '50% 40%', w: 'w-[86vw] sm:w-[56vw] lg:w-[42vw]', mono: false, cap: 'Grupa dzieci' },
         { src: IMG.teamMat, alt: 'Duża grupa treningowa Bałagan Team na czerwonej macie', pos: '50% 45%', w: 'w-[86vw] sm:w-[60vw] lg:w-[46vw]', mono: true, cap: 'Jedna mata' },
         { src: IMG.coachKid, alt: 'Trener trzyma tarcze, młody zawodnik w gardzie', pos: '60% 50%', w: 'w-[70vw] sm:w-[40vw] lg:w-[30vw]', mono: true, cap: 'Młodzi zawodnicy' },
-        { src: IMG.kick, alt: 'Wysokie kopnięcie na treningu kickboxingu', pos: '45% 40%', w: 'w-[86vw] sm:w-[56vw] lg:w-[42vw]', mono: false, cap: 'Kickboxing' },
+        { src: IMG.kickPads, alt: 'Wysokie kopnięcie na tarcze', pos: '50% 40%', w: 'w-[86vw] sm:w-[56vw] lg:w-[42vw]', mono: false, cap: 'Kickboxing' },
+        { src: IMG.ropes, alt: 'Trening z linami', pos: '35% 40%', w: 'w-[86vw] sm:w-[56vw] lg:w-[42vw]', mono: false, cap: 'Kondycja' },
       ].map(p => (
         <figure key={p.cap} className={`group relative h-[58svh] shrink-0 overflow-hidden border border-white/10 ${p.w}`}>
           <Duo src={p.src} alt={p.alt} pos={p.pos} mono={p.mono} className="h-full w-full transition-transform duration-[1.4s] group-hover:scale-105" />
@@ -160,9 +163,9 @@ export const GearPage: React.FC<PageProps> = ({ go }) => (
       title="Sprzęt"
       accent="Legion Octagon"
       bgWord="OCTAGON"
-      img={IMG.boks}
-      imgPos="40% 40%"
-      imgAlt="Bokser w rękawicach Bałagan Team"
+      img={IMG.wraps}
+      imgPos="50% 35%"
+      imgAlt="Trener owija dłonie przed treningiem"
       intro={`Trenujemy w sprzęcie Legion Octagon. Obróć karuzelę, wybierz kolor i kliknij produkt – otworzy się jego karta w sklepie Octagon Sport NL. Z kodem ${PROMO.code} zapłacisz ${PROMO.percent}% mniej.`}
       meta={[{ k: 'Kod', v: PROMO.code }, { k: 'Rabat', v: `−${PROMO.percent}%` }, { k: 'Sklep', v: 'octagonsport.nl' }]}
     />
@@ -251,10 +254,9 @@ export const ContactPage: React.FC<PageProps> = ({ go }) => (
       title="Wpadnij"
       accent="na trening"
       bgWord="KONTAKT"
-      img={IMG.teamMat}
-      imgPos="50% 45%"
-      imgAlt="Grupa treningowa Bałagan Team na macie"
-      mono
+      img={IMG.punchSponsors}
+      imgPos="55% 40%"
+      imgAlt="Trening na tarczach w sali Bałagan Team"
       intro="Najszybciej odpowiadamy na WhatsApp. Możesz też zadzwonić albo po prostu przyjść na salę w godzinach otwarcia – Brugplein 2, Lelystad. Pierwszy trening umówisz w kilka minut."
       meta={[{ k: 'WhatsApp', v: SITE.phone }, { k: 'Adres', v: 'Brugplein 2' }, { k: 'Miasto', v: '8223 AJ Lelystad' }]}
     />
@@ -275,7 +277,7 @@ export const ContactPage: React.FC<PageProps> = ({ go }) => (
     <section aria-label="Zdjęcie sali" className="pb-10">
       <div className="wrap">
         <ImageReveal className="aspect-[21/9] w-full max-w-full border border-white/10" parallax={70}>
-          <Duo src={IMG.teamRing} alt="Ekipa Bałagan Team przy ringu" pos="50% 40%" className="h-full w-full" />
+          <Duo src={IMG.kickSponsors} alt="Kopnięcie na tarcze, w tle banery partnerów klubu" pos="50% 35%" mono={false} className="h-full w-full" />
         </ImageReveal>
       </div>
     </section>

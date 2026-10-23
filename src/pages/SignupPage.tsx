@@ -172,9 +172,9 @@ export const SignupPage: React.FC<PageProps> = ({ go }) => {
         title="Zapisz się"
         accent="albo dziecko"
         bgWord="ZAPISY"
-        img={IMG.personal}
-        imgPos="55% 35%"
-        imgAlt="Trener i zawodniczka w rękawicach podczas treningu"
+        img={IMG.kidsMitts}
+        imgPos="28% 40%"
+        imgAlt="Trener prowadzi trening boksu z dziećmi"
         intro="Jeden formularz dla wszystkich: zapisz siebie na trening grupowy albo personalny 1vs1 lub 2vs1, albo zapisz dziecko na trening grupowy. Ułożymy z formularza wiadomość, a Ty wyślesz ją jednym kliknięciem na WhatsApp klubu."
         meta={[{ k: 'Czas', v: 'ok. 1 minuta' }, { k: 'Wysyłka', v: 'WhatsApp' }, { k: 'Odpowiedź', v: 'trener Kuba' }]}
       />
@@ -308,7 +308,7 @@ export const SignupPage: React.FC<PageProps> = ({ go }) => {
         <section aria-labelledby="dlaczego" className="border-t border-white/10 py-20 sm:py-28">
           <div className="wrap grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
             <ImageReveal className="aspect-[4/3] w-full max-w-full border border-white/10" from="left">
-              <Duo src={IMG.coachKid} alt="Trener na kolanach trzyma tarcze dla młodego zawodnika" pos="60% 50%" className="h-full w-full" />
+              <Duo src={IMG.kidsTalk} alt="Trener rozmawia z grupą dzieci przed treningiem" pos="50% 40%" mono={false} className="h-full w-full" />
             </ImageReveal>
             <div>
               <SectionTitle id="dlaczego" eyebrow="Dla rodziców" a="Dlaczego" b="sporty walki?" />
@@ -331,8 +331,8 @@ export const SignupPage: React.FC<PageProps> = ({ go }) => {
             <div className="mt-12 grid gap-5 md:grid-cols-3">
               {[
                 { t: 'Trening grupowy', d: 'Energia ekipy, praca w parach i rywalizacja, która napędza. Najlepszy start dla większości osób.', img: IMG.teamMat, mono: true },
-                { t: 'Personalny 1vs1', d: 'Pełna uwaga trenera i plan pod Twój cel – szybszy postęp techniki, kondycji albo przygotowanie do walki.', img: IMG.personal, mono: false },
-                { t: 'Personalny 2vs1', d: 'Trenujecie we dwoje – z partnerem, przyjacielem albo dzieckiem. Indywidualnie, ale razem.', img: IMG.coachKid, mono: true },
+                { t: 'Personalny 1vs1', d: 'Pełna uwaga trenera i plan pod Twój cel – szybszy postęp techniki, kondycji albo przygotowanie do walki.', img: IMG.mitts, mono: false },
+                { t: 'Personalny 2vs1', d: 'Trenujecie we dwoje – z partnerem, przyjacielem albo dzieckiem. Indywidualnie, ale razem.', img: IMG.coachTalk, mono: false },
               ].map((x, i) => (
                 <Reveal key={x.t} delay={i * 100}>
                   <button type="button" onClick={() => { set('kind', x.t); top.current?.scrollIntoView({ behavior: 'smooth' }); }} data-cursor="Wybierz" className="group relative flex h-full min-h-[360px] w-full flex-col justify-end overflow-hidden border border-white/10 p-7 text-left">

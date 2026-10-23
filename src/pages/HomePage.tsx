@@ -20,7 +20,7 @@ const Manifest: React.FC = () => (
       <div className="flex flex-col gap-6">
         <p id="manifest" className="eyebrow flex items-center gap-3"><span className="h-[2px] w-8 bg-blood" />Manifest klubu</p>
         <ImageReveal className="aspect-[3/4] w-full max-w-[360px] border border-white/10" parallax={60}>
-          <Duo src={IMG.boxer} alt="Bokser w rękawicach Bałagan Team w gardzie" pos="40% 30%" mono={false} className="h-full w-full" />
+          <Duo src={IMG.portrait} alt="Trener Kuba trzyma tarcze podczas treningu boksu" pos="50% 30%" mono={false} className="h-full w-full" />
         </ImageReveal>
         <p className="mono text-[12px] uppercase text-steel-dim">Brugplein 2 · Lelystad</p>
       </div>
@@ -131,7 +131,7 @@ const Bento: React.FC<PageProps> = ({ go }) => (
         <Reveal delay={80} className="md:col-span-3">
           <TiltCard max={4} className="group h-full">
             <button type="button" onClick={() => { setSignupMode('self'); go('zapisy'); }} data-cursor="Zapisz" className="relative flex h-full min-h-[260px] w-full flex-col justify-end overflow-hidden border border-white/10 p-7 text-left">
-              <Duo src={IMG.personal} alt="" pos="55% 35%" mono={false} className="absolute inset-0 transition-transform duration-[1.4s] group-hover:scale-105" />
+              <Duo src={IMG.kidsMitts} alt="" pos="50% 35%" mono={false} className="absolute inset-0 transition-transform duration-[1.4s] group-hover:scale-105" />
               <span className="relative mono text-[12px] uppercase text-ember">Grupowe · personalne · dzieci</span>
               <span className="relative display mt-2 text-[clamp(40px,4.4vw,64px)] leading-[1] text-white">Zapisz się online →</span>
               <span className="relative mt-2 max-w-[40ch] text-[15px] text-steel">Siebie na trening grupowy lub personalny, albo dziecko na grupę. Formularz w minutę, wysyłka na WhatsApp.</span>
@@ -154,7 +154,7 @@ const Bento: React.FC<PageProps> = ({ go }) => (
         <Reveal delay={120} className="md:col-span-2">
           <TiltCard max={5} className="group h-full">
             <button type="button" onClick={() => go('trener')} data-cursor="Poznaj" className="relative flex h-full min-h-[260px] w-full flex-col justify-end overflow-hidden border border-white/10 p-7 text-left">
-              <Duo src={IMG.logo} alt="" pos="50% 25%" mono={false} className="absolute inset-0 transition-transform duration-[1.4s] group-hover:scale-105" />
+              <Duo src={IMG.portrait} alt="" pos="50% 25%" mono={false} className="absolute inset-0 transition-transform duration-[1.4s] group-hover:scale-105" />
               <span className="relative mono text-[12px] uppercase text-ember">Trener</span>
               <span className="relative display mt-1 text-[clamp(40px,4vw,60px)] leading-none text-white">Kuba</span>
               <span className="relative mt-1 text-[14px] text-steel">Grupy i treningi 1vs1 · 2vs1</span>
@@ -183,12 +183,14 @@ const Bento: React.FC<PageProps> = ({ go }) => (
 /* ---------- galeria w ruchu ---------- */
 const PhotoStrip: React.FC = () => {
   const photos = [
+    { src: IMG.kickPads, alt: 'Kopnięcie na tarcze trenera', pos: '50% 40%', mono: false },
+    { src: IMG.kidsMitts, alt: 'Trener prowadzi trening boksu z dziećmi', pos: '45% 40%', mono: false },
     { src: IMG.teamRing, alt: 'Ekipa Bałagan Team przy ringu', pos: '50% 40%', mono: true },
-    { src: IMG.kick, alt: 'Kopnięcie na treningu kickboxingu', pos: '45% 40%', mono: false },
-    { src: IMG.teamMat, alt: 'Grupa treningowa na macie', pos: '50% 45%', mono: true },
-    { src: IMG.boks, alt: 'Bokser w rękawicach Bałagan Team', pos: '40% 40%', mono: false },
-    { src: IMG.coachKid, alt: 'Trener z młodym zawodnikiem na tarczach', pos: '60% 50%', mono: true },
-    { src: IMG.crossfit, alt: 'Martwy ciąg na treningu CrossFit', pos: '55% 40%', mono: false },
+    { src: IMG.tire, alt: 'Przewracanie opony na treningu siłowym', pos: '40% 40%', mono: false },
+    { src: IMG.mitts, alt: 'Praca na tarczach z trenerem', pos: '45% 30%', mono: false },
+    { src: IMG.ropes, alt: 'Liny treningowe – kondycja', pos: '35% 40%', mono: false },
+    { src: IMG.kidsTalk, alt: 'Trener rozmawia z grupą dzieci', pos: '50% 40%', mono: false },
+    { src: IMG.wraps, alt: 'Owijanie dłoni przed treningiem', pos: '50% 35%', mono: false },
   ];
   const row = (k: string) => photos.map((p, i) => (
     <figure key={k + i} className="relative h-[34vh] min-h-[220px] w-[60vw] shrink-0 overflow-hidden border border-white/10 sm:w-[34vw] lg:w-[24vw]">
@@ -225,7 +227,7 @@ const FinalCta: React.FC<PageProps> = ({ go }) => (
             </dl>
           </div>
           <ImageReveal className="relative min-h-[320px]" from="right" parallax={40}>
-            <Duo src={IMG.teamMat} alt="Ekipa Bałagan Team po treningu" pos="50% 45%" fade="left" className="h-full w-full" />
+            <Duo src={IMG.coachTalk} alt="Trener tłumaczy technikę zawodnikom przy ringu" pos="50% 40%" mono={false} fade="left" className="h-full w-full" />
           </ImageReveal>
         </div>
       </Reveal>

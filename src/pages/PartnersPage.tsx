@@ -101,10 +101,9 @@ export const PartnersPage: React.FC<PageProps> = ({ go }) => (
       title="Nasi"
       accent="partnerzy"
       bgWord="PARTNERZY"
-      img={IMG.teamRing}
-      imgPos="50% 40%"
-      imgAlt="Zawodnicy Bałagan Team przed ringiem"
-      mono
+      img={IMG.kickSponsors}
+      imgPos="62% 30%"
+      imgAlt="Trening na sali Bałagan Team, w tle banery partnerów klubu"
       intro="Bałagan Team to nie tylko sala. To ludzie i firmy, które stoją za nami w narożniku – od sprzętu, suplementów i diety po księgowość, rowery i detailing. Wspierają klub, a my polecamy ich z czystym sumieniem. Poznaj ich bliżej i odwiedź ich strony."
       aside={
         <dl className="grid grid-cols-2 gap-px border border-white/10 bg-white/10">

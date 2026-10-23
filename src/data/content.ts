@@ -1,18 +1,29 @@
 /*
  * Treści strony – dyscypliny, wartości, przebieg treningu, FAQ.
- * Zdjęcia trenujących pochodzą z plakatu klubu (src/assets/athletes) i zdjęć z sali (src/assets/media).
+ * Zdjęcia: sesja klubu (src/assets/photos) i zdjęcia z sali (src/assets/media).
  */
-import boxer from '../assets/athletes/boxer.jpg';
-import boks from '../assets/athletes/boks.jpg';
-import kick from '../assets/athletes/kick.jpg';
-import crossfit from '../assets/athletes/crossfit.jpg';
-import personal from '../assets/athletes/personal.jpg';
+import portrait from '../assets/photos/coach-portrait.webp';
+import mitts from '../assets/photos/mitts-boks.webp';
+import coachTalk from '../assets/photos/coach-talk.webp';
+import tire from '../assets/photos/tire-flip.webp';
+import kickPads from '../assets/photos/kick-pads.webp';
+import kickSponsors from '../assets/photos/kick-sponsors.webp';
+import punchSponsors from '../assets/photos/punch-sponsors.webp';
+import wraps from '../assets/photos/hand-wraps.webp';
+import kidsMitts from '../assets/photos/kids-mitts.webp';
+import kidsTalk from '../assets/photos/kids-talk.webp';
+import ropes from '../assets/photos/battle-ropes.webp';
 import teamRing from '../assets/media/team-ring.jpg';
 import teamMat from '../assets/media/team-mat.jpg';
 import coachKid from '../assets/media/coach-kid.jpg';
 import logo from '../assets/media/logo.jpg';
 
-export const IMG = { boxer, boks, kick, crossfit, personal, teamRing, teamMat, coachKid, logo };
+export const IMG = {
+  portrait, mitts, coachTalk, tire, kickPads, kickSponsors, punchSponsors, wraps, kidsMitts, kidsTalk, ropes,
+  teamRing, teamMat, coachKid, logo,
+  // starsze nazwy – wskazują na nowe zdjęcia
+  boxer: portrait, boks: mitts, kick: kickPads, crossfit: tire, personal: coachTalk,
+};
 
 export interface Discipline {
   id: string;
@@ -33,9 +44,9 @@ export const DISCIPLINES: Discipline[] = [
     id: 'boks',
     name: 'Boks',
     tag: 'Ręce · praca nóg · obrona',
-    img: boks,
-    imgPos: '40% 40%',
-    photo: teamRing,
+    img: mitts,
+    imgPos: '45% 30%',
+    photo: punchSponsors,
     photoPos: '50% 40%',
     lead: 'Szlachetna sztuka pięści. Najpierw technika i głowa, potem szybkość i siła.',
     body: [
@@ -49,10 +60,10 @@ export const DISCIPLINES: Discipline[] = [
     id: 'kickboxing',
     name: 'Kickboxing',
     tag: 'Ręce + nogi',
-    img: kick,
-    imgPos: '45% 40%',
-    photo: teamMat,
-    photoPos: '50% 45%',
+    img: kickPads,
+    imgPos: '55% 40%',
+    photo: kickSponsors,
+    photoPos: '50% 40%',
     lead: 'Ręce boksera, nogi kickboksera. Pełny arsenał i kondycja, która nie siada.',
     body: [
       'Kickboxing łączy techniki bokserskie z kopnięciami. Uczysz się low kicków, kopnięć na korpus i głowę oraz łączenia ich z rękami w płynne serie.',
@@ -65,10 +76,10 @@ export const DISCIPLINES: Discipline[] = [
     id: 'crossfit',
     name: 'CrossFit',
     tag: 'Siła · wytrzymałość',
-    img: crossfit,
-    imgPos: '55% 40%',
-    photo: boxer,
-    photoPos: '50% 30%',
+    img: tire,
+    imgPos: '40% 40%',
+    photo: ropes,
+    photoPos: '40% 40%',
     lead: 'Silnik, który ciągnie Cię przez ostatnią rundę. Siła, moc i oddech.',
     body: [
       'Treningi funkcjonalne z kettlebell, sztangą i ciężarem ciała. Obwody na czas, interwały i ćwiczenia, które przekładają się na codzienną sprawność – i na to, jak czujesz się w ringu.',
@@ -81,10 +92,10 @@ export const DISCIPLINES: Discipline[] = [
     id: 'personalne',
     name: 'Personalne',
     tag: '1vs1 · 2vs1',
-    img: personal,
-    imgPos: '55% 35%',
-    photo: coachKid,
-    photoPos: '60% 50%',
+    img: coachTalk,
+    imgPos: '50% 40%',
+    photo: mitts,
+    photoPos: '45% 30%',
     lead: 'Trener tylko dla Ciebie albo dla Was dwojga. Plan szyty na miarę celu.',
     body: [
       'Trening personalny 1vs1 to pełna uwaga trenera przez cały trening: technika poprawiana na bieżąco, tempo dopasowane do Ciebie i plan, który prowadzi prosto do celu.',
