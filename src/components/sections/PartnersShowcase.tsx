@@ -93,7 +93,7 @@ export const PartnersShowcase: React.FC<{ onOpen: () => void }> = ({ onOpen }) =
   return (
     <section aria-labelledby="partnerzy-home" className="relative overflow-hidden py-24 sm:py-32">
       <div className="wrap">
-        <SectionTitle id="partnerzy-home" eyebrow="Partnerzy klubu" a="Stoją" b="w naszym narożniku" text="Firmy, które wspierają Bałagan Team – od sponsora głównego po sprzęt, dietę, księgowość i serwis rowerowy. Kliknij, żeby poznać ich bliżej." />
+        <SectionTitle id="partnerzy-home" eyebrow="Partnerzy klubu" a="Stoją" b="w naszym narożniku" text="Firmy, które wspierają Bałagan Team – od sponsora głównego po sprzęt, suplementy, dietę, księgowość, serwis rowerowy i detailing. Kliknij, żeby poznać ich bliżej." />
         <div className="mt-14 grid gap-4 lg:grid-cols-[1.2fr_.8fr]">
           <Reveal className="h-full"><SponsorCard p={sponsor} onOpen={onOpen} /></Reveal>
           <div className="grid grid-cols-2 gap-4">

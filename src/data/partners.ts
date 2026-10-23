@@ -9,6 +9,10 @@ import polExpertMono from '../assets/partners/pol-expert-mono.webp';
 import fitDietMono from '../assets/partners/fit-diet-mono.webp';
 import vanDedykMono from '../assets/partners/van-dedyk-mono.webp';
 import legionOctagonMono from '../assets/partners/legion-octagon-mono.webp';
+import ironBody from '../assets/partners/iron-body.webp';
+import ironBodyMono from '../assets/partners/iron-body-mono.webp';
+import shark from '../assets/partners/shark-detailing.webp';
+import sharkMono from '../assets/partners/shark-detailing-mono.webp';
 
 /*
  * Partnerzy Bałagan Team. Nowego partnera dodajesz, dopisując obiekt do listy.
@@ -114,5 +118,36 @@ export const PARTNERS: Partner[] = [
       { type: 'website', url: 'https://sites.google.com/view/dedykfietsenmaker', label: 'Strona warsztatu' },
       { type: 'maps', url: 'https://www.google.com/maps/search/?api=1&query=Dedyk+de+Fietsenmaker+Markerkant+12+Almere', label: 'Markerkant 12, Almere' },
     ],
+  },
+  {
+    id: 'iron-body',
+    name: 'Iron Body Nutrition',
+    role: 'Partner · Suplementy',
+    city: 'Wageningen',
+    logo: ironBody,
+    mono: ironBodyMono,
+    plate: '#000000',
+    glow: 'rgba(200,205,215,.32)',
+    lead: '„Supplementen van een echte bodybuilder” – suplementy od zawodowego kulturysty.',
+    text: 'Holenderski sklep z suplementami założony przez zawodowego kulturystę Gregory’ego Kuca. Białko whey i izolat, kreatyna, aminokwasy EAA, kolagen, witaminy i przedtreningówki – wszystko, czego potrzebujesz, żeby regenerować się po treningu. Zamówienia do 15:00 wysyłane tego samego dnia, darmowa dostawa w Holandii od 100 €. Ich baner wisi u nas na sali.',
+    tags: ['Białko whey', 'Kreatyna', 'EAA', 'Kolagen', 'Witaminy'],
+    links: [
+      { type: 'shop', url: 'https://www.ironbodynutrition.nl/', label: 'ironbodynutrition.nl' },
+      { type: 'instagram', url: 'https://www.instagram.com/ironbody_nutrition/', label: '@ironbody_nutrition' },
+      { type: 'phone', url: 'tel:+31651919791', label: '+31 6 51919791' },
+    ],
+  },
+  {
+    id: 'shark-detailing',
+    name: 'Shark Detailing',
+    role: 'Partner · Auto detailing',
+    logo: shark,
+    mono: sharkMono,
+    plate: '#000000',
+    glow: 'rgba(245,170,30,.4)',
+    lead: 'Auto Care & Car Wash – auto lśni, jakby wyjechało z salonu.',
+    text: 'Auto care i car wash – detailing i mycie samochodów. Na trening przyjeżdżasz zmęczony, ale Twoje auto nie musi tak wyglądać. Shark Detailing wspiera Bałagan Team jako partner klubu.',
+    tags: ['Auto care', 'Car wash', 'Detailing'],
+    links: [],
   },
 ];

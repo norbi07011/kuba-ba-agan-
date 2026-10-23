@@ -105,11 +105,11 @@ export const PartnersPage: React.FC<PageProps> = ({ go }) => (
       imgPos="50% 40%"
       imgAlt="Zawodnicy Bałagan Team przed ringiem"
       mono
-      intro="Bałagan Team to nie tylko sala. To ludzie i firmy, które stoją za nami w narożniku – od sprzętu i diety po księgowość i rowery. Wspierają klub, a my polecamy ich z czystym sumieniem. Poznaj ich bliżej i odwiedź ich strony."
+      intro="Bałagan Team to nie tylko sala. To ludzie i firmy, które stoją za nami w narożniku – od sprzętu, suplementów i diety po księgowość, rowery i detailing. Wspierają klub, a my polecamy ich z czystym sumieniem. Poznaj ich bliżej i odwiedź ich strony."
       aside={
         <dl className="grid grid-cols-2 gap-px border border-white/10 bg-white/10">
           <div className="bg-ink/90 p-5"><dt className="eyebrow">Sponsor główny</dt><dd className="display mt-2 text-[34px] leading-none text-white">STAX Afbouw</dd></div>
-          <div className="bg-ink/90 p-5"><dt className="eyebrow">Branże</dt><dd className="cond mt-2 text-[15px] font-bold uppercase leading-snug tracking-[.06em] text-steel">Sprzęt · dieta · księgowość · rowery · budowa</dd></div>
+          <div className="bg-ink/90 p-5"><dt className="eyebrow">Branże</dt><dd className="cond mt-2 text-[15px] font-bold uppercase leading-snug tracking-[.06em] text-steel">Budowa · sprzęt · suplementy · dieta · księgowość · rowery · detailing</dd></div>
         </dl>
       }
     />
