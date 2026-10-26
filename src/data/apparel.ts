@@ -1,6 +1,7 @@
 /*
  * Kolekcja odzieży Bałagan Team. Zdjęcia: mockupy klubu wycięte z tła (src/assets/wear).
- * Cen nie podajemy – dostępność, rozmiary i cenę potwierdza trener (zamówienie przez WhatsApp).
+ * Ceny: komplet (koszulka + spodenki) 45 €, dres (góra + dół) 70 €. Reszta – cena na zapytanie.
+ * Zamówienie przez WhatsApp, odbiór na sali treningowej.
  */
 const w = (n: string) => new URL(`../assets/wear/${n}.webp`, import.meta.url).href;
 
@@ -18,6 +19,8 @@ export interface Garment {
   text: string;
   features: string[];
   sizes: string[];
+  /** cena w euro; brak = cena na zapytanie */
+  price?: number;
   glow: string;
   details: { img: string; label: string }[];
 }
@@ -77,6 +80,7 @@ export const GARMENTS: Garment[] = [
     name: 'Lightning Set',
     type: 'Komplet: koszulka + spodenki',
     tag: '4 edycje kolorystyczne',
+    price: 45,
     front: w('set-shirt-front'),
     back: w('set-shirt-back'),
     extra: { front: w('set-shorts-front'), back: w('set-shorts-back'), label: 'Spodenki' },
@@ -106,6 +110,7 @@ export const GARMENTS: Garment[] = [
     name: 'Team Tracksuit Navy',
     type: 'Dres: bluza + spodnie',
     tag: 'Na wyjazdy i gale',
+    price: 70,
     front: w('track-front'),
     back: w('track-back'),
     side: w('track-side'),
@@ -125,3 +130,5 @@ export const EDITIONS = [
   { id: 'blue', name: 'Blue Edition', filter: 'hue-rotate(218deg) saturate(1.25)', color: '#2f6bff' },
   { id: 'green', name: 'Green Edition', filter: 'hue-rotate(110deg) saturate(1.3) brightness(1.05)', color: '#3ddc5c' },
 ];
+
+export const priceLabel = (g: Garment) => (g.price ? `€${g.price}` : 'Cena na zapytanie');

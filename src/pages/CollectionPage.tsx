@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { NextPage, SectionTitle } from '../components/sections/PageHeader';
 import { ShaderStage } from '../components/fx/ShaderStage';
-import { KineticText, MagneticButton, MagneticLink } from '../components/fx/Kinetic';
+import { KineticText, MagneticButton, RollingNumber } from '../components/fx/Kinetic';
 import { Reveal, TiltCard, VelocityMarquee } from '../components/fx/ScrollFx';
 import { LineReveal } from '../components/fx/Premium';
 import { Embers, Garment3D, Loupe, ScanReveal } from '../components/fx/Wear';
-import { EDITIONS, GARMENTS, type Garment } from '../data/apparel';
+import { EDITIONS, GARMENTS, priceLabel, type Garment } from '../data/apparel';
 import { SITE, waLink } from '../data/site';
 import { isFinePointer, prefersReducedMotion, useViewportWidth } from '../lib/motion';
 import { onScrollFrame, pinProgress } from '../lib/scrollLoop';
@@ -57,13 +57,13 @@ const Hero: React.FC<{ onOrder: () => void; onBrowse: () => void }> = ({ onOrder
             <span className="block"><KineticText text="Wear" stagger={50} charClassName={() => 'chrome'} /></span>
             <span className="block text-blood" style={{ transform: 'skewX(-9deg)', transformOrigin: 'left', textShadow: '0 0 50px rgba(227,19,28,.4)' }}><KineticText text="the Team" stagger={50} delay={220} /></span>
           </h1>
-          <LineReveal text="Koszulki, rashguard, bluzy, komplety i dres w barwach klubu. To, w czym trenujemy na sali, jeździmy na zawody i wychodzimy do ringu. Obróć każdy ciuch, zobacz tył i detale – i zamów swój rozmiar przez WhatsApp." className="mt-6 max-w-[54ch] text-[17px] leading-relaxed text-steel sm:text-[19px]" delay={250} step={12} />
+          <LineReveal text="Koszulki, rashguard, bluzy, komplety i dres w barwach klubu. To, w czym trenujemy na sali, jeździmy na zawody i wychodzimy do ringu. Obróć każdy ciuch, zobacz tył i detale. Komplet koszulka + spodenki za 45 €, dres za 70 € – zamów przez WhatsApp i odbierz na sali." className="mt-6 max-w-[54ch] text-[17px] leading-relaxed text-steel sm:text-[19px]" delay={250} step={12} />
           <div className="mt-8 flex flex-wrap gap-3">
             <MagneticButton onClick={onOrder}>Zamów swój rozmiar</MagneticButton>
             <MagneticButton variant="ghost" onClick={onBrowse}>Zobacz kolekcję</MagneticButton>
           </div>
           <dl className="mt-10 flex flex-wrap gap-px border border-white/10 bg-white/10">
-            {[['Modele', String(GARMENTS.length)], ['Rozmiary', 'S – XXL'], ['Edycje kompletu', '4 kolory']].map(([k, v]) => (
+            {[['Komplet', '€45'], ['Dres', '€70'], ['Odbiór', 'na sali']].map(([k, v]) => (
               <div key={k} className="min-w-[110px] flex-1 bg-[#0b0909]/85 px-4 py-3 backdrop-blur">
                 <dt className="eyebrow text-[10px]">{k}</dt>
                 <dd className="mono mt-1 text-[14px] font-bold text-white">{v}</dd>
@@ -148,7 +148,7 @@ const Showcase: React.FC<{ onOrder: (id: string) => void }> = ({ onOrder }) => {
               <div className="min-w-0" aria-live="polite">
                 <p className="eyebrow">Przód · tył · detal — <span className="mono text-white">{String(idx + 1).padStart(2, '0')}</span>/{String(list.length).padStart(2, '0')}</p>
                 <div key={g.id} className="bt-swap">
-                  <p className="mono mt-4 text-[12px] uppercase text-ember">{g.type} · {g.tag}</p>
+                  <p className="mono mt-4 text-[12px] uppercase text-ember">{g.type} · {g.tag}{g.price ? ` · €${g.price}` : ''}</p>
                   <h2 className="display mt-2 text-[clamp(44px,6.6vw,96px)] leading-[1.02] text-white">{g.name}</h2>
                   <p className="cond mt-4 max-w-[44ch] text-[clamp(18px,1.8vw,22px)] font-semibold leading-snug text-steel">{g.lead}</p>
                   <ul className="mt-5 hidden flex-wrap gap-2 sm:flex">
@@ -198,7 +198,10 @@ const Card: React.FC<{ g: Garment; i: number; onOrder: (id: string) => void }> =
               {g.features.map(f => <li key={f} className="cond border border-white/12 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[.12em] text-steel">{f}</li>)}
             </ul>
             <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5">
-              <span className="mono text-[13px] text-steel-dim">{g.sizes[0]} – {g.sizes[g.sizes.length - 1]}</span>
+              <span className="flex flex-col">
+                <span className={`display text-[30px] leading-none ${g.price ? 'text-white' : 'text-[18px] text-steel'}`}>{priceLabel(g)}</span>
+                <span className="mono text-[12px] text-steel-dim">Rozmiary {g.sizes[0]} – {g.sizes[g.sizes.length - 1]}</span>
+              </span>
               <button type="button" onClick={() => onOrder(g.id)} className="cond inline-flex items-center gap-2 bg-blood px-4 py-2.5 text-[13px] font-bold uppercase tracking-[.14em] text-white transition hover:bg-ember">Zamów →</button>
             </div>
           </div>
@@ -271,7 +274,11 @@ const Editions: React.FC<{ onOrder: (id: string, edition: string) => void }> = (
           <ul className="mt-5 grid grid-cols-2 gap-2">
             {set.features.map(f => <li key={f} className="cond flex items-center gap-2.5 text-[14px] font-bold uppercase tracking-[.08em] text-steel"><span aria-hidden className="h-[2px] w-3" style={{ background: ed.color }} />{f}</li>)}
           </ul>
-          <MagneticButton className="mt-8" onClick={() => onOrder('set', ed.name)}>Zamów {ed.name}</MagneticButton>
+          <div className="mt-8 flex flex-wrap items-center gap-5">
+            <span className="display text-[56px] leading-none text-white">€{set.price}</span>
+            <MagneticButton onClick={() => onOrder('set', ed.name)}>Zamów {ed.name}</MagneticButton>
+          </div>
+          <p className="mono mt-3 text-[12px] text-steel-dim">Komplet: koszulka + spodenki · odbiór na sali</p>
         </div>
       </div>
     </section>
@@ -306,86 +313,204 @@ const Details: React.FC = () => {
   );
 };
 
-/* ================= ZAMÓWIENIE przez WhatsApp ================= */
+/* ================= ZAMÓWIENIE: mini koszyk → gotowa wiadomość na WhatsApp, odbiór na sali ================= */
+interface Line { key: number; id: string; size: string; qty: number; edition: string }
+const newLine = (id = 'set', edition = EDITIONS[0].name): Line => ({ key: Date.now() + Math.random(), id, size: 'M', qty: 1, edition });
+
 const Order: React.FC<{ pre: { id: string; edition?: string; n: number } }> = ({ pre }) => {
-  const [id, setId] = useState(pre.id);
-  const [size, setSize] = useState('M');
-  const [edition, setEdition] = useState(pre.edition ?? EDITIONS[0].name);
-  const [qty, setQty] = useState(1);
+  const [lines, setLines] = useState<Line[]>(() => [newLine('set')]);
+  const [active, setActive] = useState(0);
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [when, setWhen] = useState('');
   const [err, setErr] = useState('');
-  useEffect(() => { setId(pre.id); if (pre.edition) setEdition(pre.edition); }, [pre]);
-  const g = byId(id);
-  const msg = `Cześć! Chcę zamówić z kolekcji Bałagan Team:\n👕 ${g.name} (${g.type})${id === 'set' ? `\n🎨 ${edition}` : ''}\n📏 Rozmiar: ${size}\n🔢 Ilość: ${qty}\n\n${name.trim() ? `Imię: ${name.trim()}\n` : ''}Proszę o cenę i termin odbioru na sali.`;
+  const [ready, setReady] = useState(false);
+  const firstPre = useRef(true);
+
+  // „Zamów” z innej sekcji: ustaw model w aktywnej pozycji (albo dodaj nową, jeśli ten model już jest)
+  useEffect(() => {
+    if (firstPre.current) { firstPre.current = false; return; }
+    setReady(false);
+    setLines(ls => {
+      const i = ls.findIndex(l => l.id === pre.id && (!pre.edition || l.edition === pre.edition));
+      if (i >= 0) { setActive(i); return ls; }
+      if (ls.length === 1 && ls[0].qty === 1) { setActive(0); return [{ ...ls[0], id: pre.id, edition: pre.edition ?? ls[0].edition }]; }
+      setActive(ls.length);
+      return [...ls, newLine(pre.id, pre.edition)];
+    });
+  }, [pre]);
+
+  const upd = (i: number, patch: Partial<Line>) => { setReady(false); setLines(ls => ls.map((l, k) => (k === i ? { ...l, ...patch } : l))); };
+  const total = lines.reduce((s, l) => s + (byId(l.id).price ?? 0) * l.qty, 0);
+  const unpriced = lines.some(l => !byId(l.id).price);
+  const pieces = lines.reduce((s, l) => s + l.qty, 0);
+  const cur = lines[Math.min(active, lines.length - 1)];
+  const g = byId(cur.id);
+
+  const msg = useMemo(() => {
+    const items = lines.map(l => {
+      const x = byId(l.id);
+      const ed = l.id === 'set' ? `, ${l.edition}` : '';
+      const pr = x.price ? ` – ${l.qty} × €${x.price} = €${x.price * l.qty}` : ' – cena na zapytanie';
+      return `• ${l.qty} szt. ${x.name} (${x.type}${ed}), rozmiar ${l.size}${pr}`;
+    }).join('\n');
+    return [
+      `Cześć! Z tej strony ${name.trim() || '…'}.`,
+      `Chciał(a)bym zamówić z kolekcji Bałagan Team:`,
+      items,
+      '',
+      total ? `Razem: €${total}${unpriced ? ' + pozycje z ceną na zapytanie' : ''}` : '',
+      `Odbiór: na sali treningowej, Brugplein 2, Lelystad${when.trim() ? ` – ${when.trim()}` : ''}.`,
+      phone.trim() ? `Mój telefon: ${phone.trim()}` : '',
+      '',
+      'Dziękuję! 👊',
+    ].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
+  }, [lines, name, phone, when, total, unpriced]);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (name.trim().length < 2) { setErr('Wpisz swoje imię – trener musi wiedzieć, dla kogo przygotować zamówienie.'); document.getElementById('wear-name')?.focus(); return; }
+    setErr('');
+    setReady(true);
+  };
+
   return (
     <section id="zamow" aria-labelledby="zamow-title" className="border-t border-white/10 py-24 sm:py-32" style={{ scrollMarginTop: 80 }}>
-      <div className="wrap grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
-        <div className="lg:sticky lg:top-24">
-          <SectionTitle id="zamow-title" eyebrow="Zamówienie" a="Zamów" b="przez WhatsApp" />
-          <p className="mt-6 max-w-[46ch] text-[17px] text-steel-dim">Wybierz model, rozmiar i ilość – ułożymy wiadomość do trenera. Cenę, dostępność i termin odbioru na sali potwierdzimy w odpowiedzi.</p>
-          <div className="relative mt-8 grid aspect-square w-full max-w-[420px] place-items-center overflow-hidden border border-white/10" style={{ background: `radial-gradient(circle at 50% 60%, ${g.glow}, transparent 65%), #110c0c` }}>
-            <div key={id} className="bt-swap absolute inset-[10%]">
-              <Garment3D front={g.front} back={g.back} alt={g.name} auto drag depth={16} layers={5} filter={id === 'set' ? EDITIONS.find(e => e.name === edition)?.filter : undefined} className="h-full w-full" />
-            </div>
-          </div>
+      <div className="wrap">
+        <SectionTitle id="zamow-title" eyebrow="Zamów i odbierz na sali" a="Twoje" b="zamówienie" text="Wybierz model, rozmiar i ilość – możesz dodać kilka pozycji. Ułożymy gotową wiadomość do trenera, a Ty wyślesz ją jednym kliknięciem na WhatsApp. Płacisz i odbierasz na sali treningowej." />
+
+        {/* cennik */}
+        <div className="mt-10 grid gap-3 sm:grid-cols-2">
+          {[byId('set'), byId('tracksuit')].map(x => (
+            <button key={x.id} type="button" onClick={() => { const i = lines.findIndex(l => l.id === x.id); if (i >= 0) setActive(i); else { setLines(ls => [...ls, newLine(x.id)]); setActive(lines.length); } setReady(false); }}
+              className="group relative flex items-center gap-5 overflow-hidden border border-white/10 bg-ink-2 p-4 text-left transition hover:border-blood sm:p-5">
+              <span aria-hidden className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: `radial-gradient(circle at 15% 50%, ${x.glow}, transparent 60%)` }} />
+              <img src={x.front} alt="" className="relative h-20 w-20 shrink-0 object-contain transition-transform duration-500 group-hover:scale-110 sm:h-24 sm:w-24" />
+              <span className="relative min-w-0 flex-1">
+                <span className="eyebrow block">{x.type}</span>
+                <span className="cond mt-1 block text-[18px] font-bold uppercase tracking-[.06em] text-white">{x.name}</span>
+              </span>
+              <span className="relative display text-[clamp(40px,4vw,56px)] leading-none text-white">€{x.price}</span>
+            </button>
+          ))}
         </div>
-        <div className="flex flex-col gap-8 border border-white/10 bg-ink-2 p-6 sm:p-8">
-          <fieldset>
-            <legend className="eyebrow">Model</legend>
-            <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
-              {GARMENTS.map(x => (
-                <button key={x.id} type="button" onClick={() => setId(x.id)} aria-pressed={x.id === id} title={x.name}
-                  className={`grid aspect-square place-items-center border p-1.5 transition ${x.id === id ? 'border-blood bg-blood/10' : 'border-white/12 hover:border-white/40'}`}>
-                  <img src={x.front} alt={x.name} className="h-full w-full object-contain" />
-                </button>
-              ))}
-            </div>
-            <p className="cond mt-3 text-[18px] font-bold uppercase tracking-[.06em] text-white">{g.name}</p>
-          </fieldset>
-          {id === 'set' && (
-            <fieldset>
-              <legend className="eyebrow">Edycja</legend>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {EDITIONS.map(x => (
-                  <button key={x.id} type="button" onClick={() => setEdition(x.name)} aria-pressed={x.name === edition}
-                    className={`cond flex items-center gap-2 border px-3 py-2 text-[13px] font-bold uppercase tracking-[.1em] transition ${x.name === edition ? 'border-white/60 text-white' : 'border-white/15 text-steel hover:border-white/40'}`}>
-                    <span className="h-3 w-3 rounded-full" style={{ background: x.color }} />{x.name}
-                  </button>
-                ))}
+
+        <form onSubmit={submit} noValidate className="mt-10 grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
+          {/* podgląd aktywnej pozycji */}
+          <div className="lg:sticky lg:top-24">
+            <div className="relative grid aspect-square w-full max-w-[460px] place-items-center overflow-hidden border border-white/10" style={{ background: `radial-gradient(circle at 50% 60%, ${g.glow}, transparent 65%), #110c0c` }}>
+              <div key={cur.id + cur.edition} className="bt-swap absolute inset-[10%]">
+                <Garment3D front={g.front} back={g.back} alt={g.name} auto drag depth={16} layers={5} filter={cur.id === 'set' ? EDITIONS.find(e => e.name === cur.edition)?.filter : undefined} className="h-full w-full" />
               </div>
-            </fieldset>
-          )}
-          <fieldset>
-            <legend className="eyebrow">Rozmiar</legend>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {g.sizes.map(s => (
-                <button key={s} type="button" onClick={() => setSize(s)} aria-pressed={s === size}
-                  className={`mono min-w-14 border px-3 py-2.5 text-[14px] font-bold transition ${s === size ? 'border-blood bg-blood text-white' : 'border-white/15 text-steel hover:border-white/50'}`}>{s}</button>
-              ))}
+              <span className="cond absolute left-4 top-4 bg-blood px-2.5 py-1 text-[11px] font-bold uppercase tracking-[.16em] text-white">Pozycja {Math.min(active, lines.length - 1) + 1}</span>
+              <span className="display absolute bottom-4 right-5 text-[40px] leading-none text-white">{priceLabel(g)}</span>
             </div>
-          </fieldset>
-          <div className="grid gap-6 sm:grid-cols-[auto_1fr]">
-            <div>
-              <span className="eyebrow">Ilość</span>
-              <div className="mt-3 flex items-center border border-white/15" role="group" aria-label="Ilość">
-                <button type="button" onClick={() => setQty(q => Math.max(1, q - 1))} className="grid h-12 w-12 place-items-center text-xl text-steel hover:text-white" aria-label="Mniej">−</button>
-                <span className="mono w-8 text-center text-[17px] font-bold text-white" aria-live="polite">{qty}</span>
-                <button type="button" onClick={() => setQty(q => Math.min(20, q + 1))} className="grid h-12 w-12 place-items-center text-xl text-steel hover:text-white" aria-label="Więcej">+</button>
+          </div>
+
+          <div className="flex flex-col gap-5">
+            {lines.map((l, i) => {
+              const x = byId(l.id);
+              const on = i === Math.min(active, lines.length - 1);
+              return (
+                <fieldset key={l.key} onFocus={() => setActive(i)} onClick={() => setActive(i)} className={`relative border p-5 transition-colors sm:p-6 ${on ? 'border-blood/70 bg-ink-2' : 'border-white/10 bg-ink-2/60'}`}>
+                  <legend className="cond px-2 text-[13px] font-bold uppercase tracking-[.2em] text-blood">Pozycja {i + 1}</legend>
+                  {lines.length > 1 && (
+                    <button type="button" onClick={e => { e.stopPropagation(); setLines(ls => ls.filter((_, k) => k !== i)); setActive(0); setReady(false); }} className="cond absolute right-4 top-3 text-[12px] font-bold uppercase tracking-[.14em] text-steel-dim hover:text-ember">Usuń</button>
+                  )}
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+                    {GARMENTS.map(m => (
+                      <button key={m.id} type="button" onClick={() => upd(i, { id: m.id })} aria-pressed={m.id === l.id} title={m.name}
+                        className={`relative grid aspect-square place-items-center border p-1.5 transition ${m.id === l.id ? 'border-blood bg-blood/10' : 'border-white/12 hover:border-white/40'}`}>
+                        <img src={m.front} alt={m.name} className="h-full w-full object-contain" />
+                        {m.price && <span className="mono absolute bottom-0.5 right-1 text-[10px] font-bold text-white">€{m.price}</span>}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-3 flex flex-wrap items-baseline justify-between gap-2">
+                    <span className="cond text-[18px] font-bold uppercase tracking-[.06em] text-white">{x.name}</span>
+                    <span className="mono text-[14px] text-ember">{priceLabel(x)}</span>
+                  </p>
+                  {l.id === 'set' && (
+                    <div className="mt-4 flex flex-wrap gap-2" role="radiogroup" aria-label="Edycja">
+                      {EDITIONS.map(e => (
+                        <button key={e.id} type="button" role="radio" aria-checked={e.name === l.edition} onClick={() => upd(i, { edition: e.name })}
+                          className={`cond flex items-center gap-2 border px-3 py-2 text-[12px] font-bold uppercase tracking-[.1em] transition ${e.name === l.edition ? 'border-white/60 text-white' : 'border-white/15 text-steel hover:border-white/40'}`}>
+                          <span className="h-3 w-3 rounded-full" style={{ background: e.color }} />{e.name.replace(' Edition', '')}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  <div className="mt-4 flex flex-wrap items-end gap-5">
+                    <div>
+                      <span className="eyebrow">Rozmiar</span>
+                      <div className="mt-2 flex flex-wrap gap-1.5" role="radiogroup" aria-label={`Rozmiar – pozycja ${i + 1}`}>
+                        {x.sizes.map(s => (
+                          <button key={s} type="button" role="radio" aria-checked={s === l.size} onClick={() => upd(i, { size: s })}
+                            className={`mono h-11 min-w-11 border px-2.5 text-[14px] font-bold transition ${s === l.size ? 'border-blood bg-blood text-white' : 'border-white/15 text-steel hover:border-white/50'}`}>{s}</button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="eyebrow">Ilość</span>
+                      <div className="mt-2 flex items-center border border-white/15" role="group" aria-label={`Ilość – pozycja ${i + 1}`}>
+                        <button type="button" onClick={() => upd(i, { qty: Math.max(1, l.qty - 1) })} className="grid h-11 w-11 place-items-center text-xl text-steel hover:text-white" aria-label="Mniej">−</button>
+                        <span className="mono w-8 text-center text-[17px] font-bold text-white" aria-live="polite">{l.qty}</span>
+                        <button type="button" onClick={() => upd(i, { qty: Math.min(20, l.qty + 1) })} className="grid h-11 w-11 place-items-center text-xl text-steel hover:text-white" aria-label="Więcej">+</button>
+                      </div>
+                    </div>
+                    {x.price && <span className="mono ml-auto text-[18px] font-bold text-white">€{x.price * l.qty}</span>}
+                  </div>
+                </fieldset>
+              );
+            })}
+            <button type="button" onClick={() => { setLines(ls => [...ls, newLine('set')]); setActive(lines.length); setReady(false); }}
+              className="cond flex items-center justify-center gap-2 border border-dashed border-white/25 py-4 text-[14px] font-bold uppercase tracking-[.16em] text-steel transition hover:border-blood hover:text-white">
+              + Dodaj kolejną pozycję
+            </button>
+
+            {/* dane i suma */}
+            <div className="grid gap-5 border border-white/10 bg-ink-2 p-5 sm:grid-cols-2 sm:p-6">
+              <label htmlFor="wear-name" className="flex flex-col gap-2">
+                <span className="eyebrow">Imię i nazwisko</span>
+                <input id="wear-name" value={name} onChange={e => { setName(e.target.value); setErr(''); setReady(false); }} placeholder="np. Marta Nowak" autoComplete="name" aria-invalid={!!err}
+                  className="h-12 border border-white/15 bg-black/40 px-4 text-[16px] text-white outline-none transition placeholder:text-steel-dim/60 focus:border-blood aria-[invalid=true]:border-ember" />
+              </label>
+              <label htmlFor="wear-phone" className="flex flex-col gap-2">
+                <span className="eyebrow">Telefon (opcjonalnie)</span>
+                <input id="wear-phone" type="tel" value={phone} onChange={e => { setPhone(e.target.value); setReady(false); }} placeholder="+31 6 …" autoComplete="tel"
+                  className="mono h-12 border border-white/15 bg-black/40 px-4 text-[16px] text-white outline-none transition placeholder:text-steel-dim/60 focus:border-blood" />
+              </label>
+              <label htmlFor="wear-when" className="flex flex-col gap-2 sm:col-span-2">
+                <span className="eyebrow">Kiedy odbierzesz? (opcjonalnie)</span>
+                <input id="wear-when" value={when} onChange={e => { setWhen(e.target.value); setReady(false); }} placeholder="np. po treningu we wtorek"
+                  className="h-12 border border-white/15 bg-black/40 px-4 text-[16px] text-white outline-none transition placeholder:text-steel-dim/60 focus:border-blood" />
+              </label>
+              {err && <p role="alert" className="border-l-2 border-blood bg-blood/10 px-4 py-3 text-[14px] text-white sm:col-span-2">{err}</p>}
+              <div className="flex flex-wrap items-end justify-between gap-4 border-t border-white/10 pt-5 sm:col-span-2">
+                <div>
+                  <span className="eyebrow block">Razem · {pieces} szt.</span>
+                  <span className="display text-[48px] leading-none text-white">{total ? <RollingNumber value={total} format={n => `€${Math.round(n)}`} /> : '—'}</span>
+                  {unpriced && <span className="mono mt-1 block text-[12px] text-steel-dim">+ pozycje z ceną na zapytanie</span>}
+                </div>
+                <MagneticButton type="submit">Przygotuj wiadomość</MagneticButton>
               </div>
+              <p className="mono text-[12px] text-steel-dim sm:col-span-2">Płatność i odbiór: sala treningowa, Brugplein 2, Lelystad.</p>
             </div>
-            <label htmlFor="wear-name" className="flex flex-col gap-3">
-              <span className="eyebrow">Imię (opcjonalnie)</span>
-              <input id="wear-name" value={name} onChange={e => { setName(e.target.value); setErr(''); }} placeholder="np. Marta" autoComplete="given-name"
-                className="h-12 border border-white/15 bg-black/40 px-4 text-[16px] text-white outline-none transition placeholder:text-steel-dim/60 focus:border-blood" />
-            </label>
+
+            {ready && (
+              <div className="bt-swap border border-[#25d366]/40 bg-ink-2 p-5 sm:p-6" style={{ boxShadow: '0 40px 80px -50px rgba(37,211,102,.5)' }}>
+                <p className="eyebrow">Gotowe – sprawdź i wyślij</p>
+                <pre className="mt-4 whitespace-pre-wrap border border-white/10 bg-black/50 p-4 font-[inherit] text-[15px] leading-relaxed text-white">{msg}</pre>
+                <div className="mt-5 flex flex-wrap items-center gap-4">
+                  <a href={waLink(msg)} target="_blank" rel="noopener noreferrer" className="cond inline-flex items-center gap-3 bg-[#25d366] px-7 py-4 text-[15px] font-bold uppercase tracking-[.16em] text-[#0b2a17] transition-shadow hover:shadow-[0_14px_40px_-10px_rgba(37,211,102,.9)]">
+                    Wyślij na WhatsApp
+                  </a>
+                  <span className="mono text-[12px] text-steel-dim">do trenera · {SITE.phone}</span>
+                </div>
+              </div>
+            )}
           </div>
-          <pre className="whitespace-pre-wrap border border-white/10 bg-black/50 p-4 font-[inherit] text-[14px] leading-relaxed text-steel">{msg}</pre>
-          {err && <p role="alert" className="text-ember">{err}</p>}
-          <div className="flex flex-wrap items-center gap-4">
-            <MagneticLink href={waLink(msg)} target="_blank" rel="noopener noreferrer">Wyślij zamówienie na WhatsApp</MagneticLink>
-            <span className="mono text-[12px] text-steel-dim">{SITE.phone}</span>
-          </div>
-        </div>
+        </form>
       </div>
     </section>
   );

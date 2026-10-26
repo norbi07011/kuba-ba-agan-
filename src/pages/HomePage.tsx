@@ -84,7 +84,7 @@ const WearTeaser: React.FC<PageProps> = ({ go }) => {
     <section aria-labelledby="wear-teaser" className="relative isolate overflow-hidden border-y border-white/10 py-24 sm:py-32" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 60%, #2a0b0d, #0b0909 70%)' }}>
       <Embers className="-z-10" density={0.8} />
       <div className="wrap">
-        <SectionTitle id="wear-teaser" eyebrow="Nowość · Kolekcja klubowa" a="Wear" b="the Team" text="Koszulki, rashguard, bluzy, komplety i dres Bałagan Team. Obracaj, oglądaj tył i detale, zamawiaj swój rozmiar przez WhatsApp." />
+        <SectionTitle id="wear-teaser" eyebrow="Nowość · Kolekcja klubowa" a="Wear" b="the Team" text="Koszulki, rashguard, bluzy, komplety i dres Bałagan Team. Obracaj, oglądaj tył i detale. Komplet koszulka + spodenki 45 €, dres 70 € – zamów przez WhatsApp i odbierz na sali." />
         <div className="mt-12 grid grid-cols-3 items-end gap-2 sm:gap-6">
           {pick.map((g, i) => (
             <button key={g.id} type="button" onClick={() => go('kolekcja')} data-cursor="Kolekcja" className={`group relative block ${i === 1 ? 'z-10 -mb-4 scale-110' : 'opacity-90'}`} aria-label={`${g.name} – zobacz kolekcję`}>
