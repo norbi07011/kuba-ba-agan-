@@ -1,4 +1,4 @@
-export const PAGES = ['start', 'treningi', 'zapisy', 'grafik', 'trener', 'sprzet', 'partnerzy', 'kontakt'] as const;
+export const PAGES = ['start', 'treningi', 'zapisy', 'grafik', 'trener', 'sprzet', 'kolekcja', 'partnerzy', 'kontakt'] as const;
 export type PageId = (typeof PAGES)[number];
 export interface PageProps { go: (id: PageId) => void }
 export const isPage = (s: string): s is PageId => (PAGES as readonly string[]).includes(s);
@@ -11,6 +11,7 @@ export const PAGE_TITLE: Record<PageId, string> = {
   grafik: 'Grafik · Bałagan Team',
   trener: 'Trener · Bałagan Team',
   sprzet: 'Sprzęt Octagon · Bałagan Team',
+  kolekcja: 'Kolekcja · Bałagan Team',
   partnerzy: 'Partnerzy · Bałagan Team',
   kontakt: 'Kontakt · Bałagan Team',
 };

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Hero } from '../components/sections/Hero';
 import { Marquees } from '../components/sections/Disciplines';
 import { PromoStrip, CodeChip } from '../components/sections/Promo';
+import { Embers, Garment3D } from '../components/fx/Wear';
+import { GARMENTS } from '../data/apparel';
 import { SectionTitle } from '../components/sections/PageHeader';
 import { PartnersShowcase } from '../components/sections/PartnersShowcase';
 import { Reveal, TiltCard, CountUp } from '../components/fx/ScrollFx';
@@ -73,6 +75,34 @@ const DisciplineRail: React.FC<PageProps> = ({ go }) => (
     </article>
   </HScroll>
 );
+
+
+/* ---------- zapowiedź kolekcji odzieży ---------- */
+const WearTeaser: React.FC<PageProps> = ({ go }) => {
+  const pick = ['hoodie', 'jersey', 'rashguard'].map(id => GARMENTS.find(g => g.id === id)!);
+  return (
+    <section aria-labelledby="wear-teaser" className="relative isolate overflow-hidden border-y border-white/10 py-24 sm:py-32" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 60%, #2a0b0d, #0b0909 70%)' }}>
+      <Embers className="-z-10" density={0.8} />
+      <div className="wrap">
+        <SectionTitle id="wear-teaser" eyebrow="Nowość · Kolekcja klubowa" a="Wear" b="the Team" text="Koszulki, rashguard, bluzy, komplety i dres Bałagan Team. Obracaj, oglądaj tył i detale, zamawiaj swój rozmiar przez WhatsApp." />
+        <div className="mt-12 grid grid-cols-3 items-end gap-2 sm:gap-6">
+          {pick.map((g, i) => (
+            <button key={g.id} type="button" onClick={() => go('kolekcja')} data-cursor="Kolekcja" className={`group relative block ${i === 1 ? 'z-10 -mb-4 scale-110' : 'opacity-90'}`} aria-label={`${g.name} – zobacz kolekcję`}>
+              <div className="bt-float aspect-square w-full" style={{ ['--dur' as string]: `${5 + i * 0.6}s`, ['--delay' as string]: `${-i * 1.3}s`, ['--r0' as string]: '-2deg', ['--r1' as string]: '2deg' }}>
+                <Garment3D front={g.front} back={g.back} alt={g.name} auto depth={14} layers={4} className="h-full w-full" />
+              </div>
+              <div aria-hidden className="mx-auto mt-1 h-4 w-1/2 rounded-[50%]" style={{ background: 'radial-gradient(closest-side, rgba(0,0,0,.8), transparent)' }} />
+              <span className="cond mt-3 block text-center text-[12px] font-bold uppercase tracking-[.14em] text-steel transition-colors group-hover:text-white sm:text-[15px]">{g.name}</span>
+            </button>
+          ))}
+        </div>
+        <div className="mt-12 flex justify-center">
+          <MagneticButton onClick={() => go('kolekcja')}>Zobacz kolekcję</MagneticButton>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 /* ---------- wartości ---------- */
 const Values: React.FC = () => (
@@ -242,6 +272,7 @@ export const HomePage: React.FC<PageProps & { introPending: boolean }> = ({ go, 
     <Manifest />
     <DisciplineRail go={go} />
     <Marquees />
+    <WearTeaser go={go} />
     <Values />
     <PhotoStrip />
     <Bento go={go} />

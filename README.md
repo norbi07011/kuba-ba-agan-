@@ -49,3 +49,6 @@ Kod jest wielkość-liter-obojętny (koszyk zamienia wpis na wielkie litery), wi
 
 ## Zdjęcia
 `src/assets/photos/` – sesja klubu (webp). Przypisanie do sekcji: `IMG` w `src/data/content.ts`.
+
+## Kolekcja odzieży
+`src/pages/CollectionPage.tsx`, dane `src/data/apparel.ts`, wycięte ubrania `src/assets/wear/` (przód/tył). Efekty: `src/components/fx/Wear.tsx` (Garment3D, Holo, Embers, ScanReveal, Loupe). Zamówienia przez WhatsApp, bez cen.

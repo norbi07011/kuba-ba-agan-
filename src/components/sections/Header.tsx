@@ -8,6 +8,7 @@ export const NAV = [
   { id: 'grafik', label: 'Grafik' },
   { id: 'trener', label: 'Trener' },
   { id: 'sprzet', label: 'Sprzęt' },
+  { id: 'kolekcja', label: 'Kolekcja' },
   { id: 'partnerzy', label: 'Partnerzy' },
   { id: 'kontakt', label: 'Kontakt' },
 ]
@@ -75,11 +76,11 @@ export const Header: React.FC<{ onNav: (id: string) => void; onHome: () => void;
           <button type="button" onClick={() => { setMenu(false); onHome(); }} aria-label="Bałagan Team – strona główna" className="text-left">
             <Wordmark />
           </button>
-          <nav aria-label="Główna nawigacja" className="hidden items-center gap-1 lg:flex">
+          <nav aria-label="Główna nawigacja" className="hidden items-center gap-0.5 xl:flex">
             {NAV.filter(n => n.id !== 'zapisy').map(n => (
-              <button key={n.id} type="button" onClick={() => go(n.id)} aria-current={active === n.id ? 'page' : undefined} className={`group relative cond px-3.5 py-2 text-[15px] font-bold uppercase tracking-[.16em] transition-colors hover:text-white ${active === n.id ? 'text-white' : 'text-steel-dim'}`}>
+              <button key={n.id} type="button" onClick={() => go(n.id)} aria-current={active === n.id ? 'page' : undefined} className={`group relative cond px-3 py-2 text-[15px] font-bold uppercase tracking-[.13em] transition-colors hover:text-white ${active === n.id ? 'text-white' : 'text-steel-dim'}`}>
                 <span className="roll"><span>{n.label}</span><span aria-hidden>{n.label}</span></span>
-                <span aria-hidden className={`absolute inset-x-3.5 bottom-1 h-[2px] origin-left bg-blood transition-transform duration-300 group-hover:scale-x-100 ${active === n.id ? 'scale-x-100' : 'scale-x-0'}`} />
+                <span aria-hidden className={`absolute inset-x-3 bottom-1 h-[2px] origin-left bg-blood transition-transform duration-300 group-hover:scale-x-100 ${active === n.id ? 'scale-x-100' : 'scale-x-0'}`} />
               </button>
             ))}
           </nav>
@@ -98,7 +99,7 @@ export const Header: React.FC<{ onNav: (id: string) => void; onHome: () => void;
               aria-expanded={menu}
               aria-controls="bt-mobile-menu"
               aria-label={menu ? 'Zamknij menu' : 'Otwórz menu'}
-              className="grid h-11 w-11 place-items-center rounded-full border border-white/15 lg:hidden"
+              className="grid h-11 w-11 place-items-center rounded-full border border-white/15 xl:hidden"
             >
               <span aria-hidden className="relative block h-3 w-5">
                 <span className="absolute left-0 top-0 h-[2px] w-5 bg-steel transition-transform duration-300" style={{ transform: menu ? 'translateY(5px) rotate(45deg)' : 'none' }} />
@@ -112,7 +113,7 @@ export const Header: React.FC<{ onNav: (id: string) => void; onHome: () => void;
       <div
         id="bt-mobile-menu"
         hidden={!menu}
-        className="fixed inset-0 z-[65] lg:hidden"
+        className="fixed inset-0 z-[65] overflow-y-auto xl:hidden"
         style={{ background: 'radial-gradient(ellipse at 80% 0%, rgba(227,19,28,.25), transparent 60%), #0b0909', paddingTop: 'calc(96px + env(safe-area-inset-top, 0px))', paddingLeft: 'var(--gutter-l)', paddingRight: 'var(--gutter-r)' }}
       >
         <nav aria-label="Menu mobilne" className="flex flex-col">

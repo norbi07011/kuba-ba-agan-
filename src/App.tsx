@@ -10,10 +10,11 @@ import { HomePage } from './pages/HomePage';
 import { TrainingPage } from './pages/TrainingPage';
 import { PartnersPage } from './pages/PartnersPage';
 import { SignupPage } from './pages/SignupPage';
+import { CollectionPage } from './pages/CollectionPage';
 import { SchedulePage, CoachPage, GearPage, ContactPage } from './pages/OtherPages';
 import { PAGE_TITLE, isPage, type PageId } from './pages/types';
 
-const LABEL: Record<PageId, string> = { start: 'Start', treningi: 'Treningi', zapisy: 'Zapisy', grafik: 'Grafik', trener: 'Trener', sprzet: 'Sprzęt', partnerzy: 'Partnerzy', kontakt: 'Kontakt' };
+const LABEL: Record<PageId, string> = { start: 'Start', treningi: 'Treningi', zapisy: 'Zapisy', grafik: 'Grafik', trener: 'Trener', sprzet: 'Sprzęt', kolekcja: 'Kolekcja', partnerzy: 'Partnerzy', kontakt: 'Kontakt' };
 
 /*
  * Osobne podstrony: #treningi, #grafik, #trener, #sprzet, #partnerzy, #kontakt (start = bez kotwicy).
@@ -77,6 +78,7 @@ export default function App() {
           {page === 'grafik' && <SchedulePage go={go} />}
           {page === 'trener' && <CoachPage go={go} />}
           {page === 'sprzet' && <GearPage go={go} />}
+          {page === 'kolekcja' && <CollectionPage go={go} />}
           {page === 'partnerzy' && <PartnersPage go={go} />}
           {page === 'kontakt' && <ContactPage go={go} />}
         </main>

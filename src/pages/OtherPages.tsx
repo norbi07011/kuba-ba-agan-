@@ -222,7 +222,7 @@ export const GearPage: React.FC<PageProps> = ({ go }) => (
         </div>
       </div>
     </section>
-    <NextPage label="Następna strona" title="Partnerzy" onGo={() => go('partnerzy')} img={IMG.teamMat} />
+    <NextPage label="Następna strona" title="Kolekcja" onGo={() => go('kolekcja')} img={IMG.teamMat} />
   </>
 );
 
