@@ -18,7 +18,7 @@ const CHAPTERS: Chapter[] = [
   { from: 0, to: 0.17, round: 'Wejście', title: ['Wejdź do', 'Bałagan Team'], text: 'Brugplein 2, Lelystad. Za tymi drzwiami zostawiasz wymówki – i zaczynasz pracę.' },
   { from: 0.19, to: 0.33, round: 'Sala', title: ['Jedna mata.', 'Jedna ekipa.'], text: 'Dzieci, dorośli, początkujący i zawodnicy. Każdy w swoim tempie, wszyscy z tym samym celem.' },
   { from: 0.37, to: 0.58, round: 'Ring', title: ['Tu rodzi się', 'charakter.'], text: 'Technika, obrona, kontrolowany sparing. Do ringu wchodzisz wtedy, gdy jesteś gotowy – nigdy wcześniej.' },
-  { from: 0.62, to: 0.79, round: 'Worki', title: ['Praca.', 'Runda po rundzie.'], text: 'Kombinacje, kopnięcia, kondycja. Worek nie odda – ale pokaże, ile w Tobie zostało.' },
+  { from: 0.62, to: 0.79, round: 'Partnerzy', title: ['Za nami stoją', 'mocni partnerzy.'], text: 'STAX Afbouw – sponsor główny – i firmy, które wspierają klub. Dzięki nim worki wiszą, a ring stoi.' },
   { from: 0.82, to: 0.9, round: 'Ekipa', title: ['Twarze', 'naszej sali.'], text: 'Trener Kuba, młodzi zawodnicy, grupy dorosłych. Tak wygląda codzienny trening w Bałagan Team.' },
   { from: 0.93, to: 1.01, round: 'Twój ruch', title: ['Pierwszy trening?', 'Wchodzisz.'], text: 'Napisz albo zapisz się online. Pokażemy Ci salę na żywo.', cta: true },
 ];

@@ -96,7 +96,7 @@ const beamMat = (color: THREE.ColorRepresentation, strength = 0.18) =>
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
     uniforms: { uColor: { value: new THREE.Color(color) }, uStrength: { value: strength } },
     vertexShader: 'varying vec2 vUv; varying vec3 vN; varying vec3 vV; varying float vD; void main(){ vUv=uv; vec4 mv=modelViewMatrix*vec4(position,1.); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); vD=-mv.z; gl_Position=projectionMatrix*mv; }',
-    fragmentShader: 'uniform vec3 uColor; uniform float uStrength; varying vec2 vUv; varying vec3 vN; varying vec3 vV; varying float vD; void main(){ float edge=pow(abs(dot(vN,vV)),1.6); float fall=pow(vUv.y,1.4); float near=smoothstep(1.5,7.0,vD); gl_FragColor=vec4(uColor*uStrength*edge*fall*near,1.); }',
+    fragmentShader: 'uniform vec3 uColor; uniform float uStrength; varying vec2 vUv; varying vec3 vN; varying vec3 vV; varying float vD; void main(){ float edge=pow(abs(dot(vN,vV)),1.6); float fall=pow(vUv.y,1.4); float near=smoothstep(3.0,11.0,vD); gl_FragColor=vec4(uColor*uStrength*edge*fall*near,1.); }',
   });
 
 const loadTex = (url: string) =>
@@ -147,7 +147,7 @@ export async function createGym(canvas: HTMLCanvasElement, assets: GymAssets, op
   const red = track(new THREE.MeshStandardMaterial({ color: '#b10f17', roughness: 0.45 }));
   const redGlow = track(new THREE.MeshStandardMaterial({ color: '#ff2a2a', emissive: '#ff1a1a', emissiveIntensity: 3.2, toneMapped: false }));
   const warmGlow = track(new THREE.MeshStandardMaterial({ color: '#ffd8a8', emissive: '#ffb066', emissiveIntensity: 1.8, toneMapped: false }));
-  const whiteGlow = track(new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#fff4e6', emissiveIntensity: 1.6, toneMapped: false }));
+  const whiteGlow = track(new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#fff4e6', emissiveIntensity: 0.7, toneMapped: false }));
 
   /* ======================= ZEWNĄTRZ ======================= */
   // ziemia: mokry asfalt przed wejściem
@@ -278,16 +278,16 @@ export async function createGym(canvas: HTMLCanvasElement, assets: GymAssets, op
     beam.position.set(x, HH - 1.45, z);
     beam.lookAt(target); beam.rotateX(-Math.PI / 2);
   };
-  mkSpot(0, -22, new THREE.Vector3(0, 1, -22), '#fff4e8', 320, true, 0.11);
-  mkSpot(-3.2, -19, new THREE.Vector3(-1.5, 1, -21), '#ffd6d0', 110, false, 0.08);
-  mkSpot(3.2, -25, new THREE.Vector3(1.5, 1, -23), '#ffd6d0', 110, false, 0.08);
-  for (let z = -8; z >= -34; z -= 6.5) mkSpot(8.6, z, new THREE.Vector3(9, 0.5, z), '#ffe6cc', 80, false, 0.05, false);
+  mkSpot(0, -22, new THREE.Vector3(0, 1, -22), '#fff4e8', 170, true, 0.05);
+  mkSpot(-3.2, -19, new THREE.Vector3(-1.5, 1, -21), '#ffd6d0', 90, false, 0.035);
+  mkSpot(3.2, -25, new THREE.Vector3(1.5, 1, -23), '#ffd6d0', 90, false, 0.035);
+  for (let z = -8; z >= -34; z -= 6.5) mkSpot(8.6, z, new THREE.Vector3(9, 0.5, z), '#ffe6cc', 80, false, 0.02, false);
   // jedno szerokie światło na rząd worków zamiast pięciu
-  const bagLight = add(new THREE.SpotLight('#ffe2c4', 260, 40, 0.9, 0.7, 1.2)); bagLight.position.set(5, HH - 1.5, -20); bagLight.target.position.set(10, 0.5, -21); add(bagLight.target);
-  mkSpot(-8.5, -10, new THREE.Vector3(-11, 3, -10), '#ffffff', 60, false, 0.05, false);
-  mkSpot(-8.5, -26, new THREE.Vector3(-11, 3, -26), '#ffffff', 60, false, 0.05, false);
-  mkSpot(-5, -38, new THREE.Vector3(-3, 3.5, -42), '#ff6a5a', 160, false, 0.1);
-  mkSpot(5, -38, new THREE.Vector3(3, 3.5, -42), '#ff6a5a', 160, false, 0.1);
+  const bagLight = add(new THREE.SpotLight('#ffe2c4', 95, 40, 0.9, 0.7, 1.2)); bagLight.position.set(5, HH - 1.5, -20); bagLight.target.position.set(10, 0.5, -21); add(bagLight.target);
+  mkSpot(-8.5, -10, new THREE.Vector3(-11, 3, -10), '#ffffff', 60, false, 0.02, false);
+  mkSpot(-8.5, -26, new THREE.Vector3(-11, 3, -26), '#ffffff', 60, false, 0.02, false);
+  mkSpot(-5, -38, new THREE.Vector3(-3, 3.5, -42), '#ff6a5a', 160, false, 0.05);
+  mkSpot(5, -38, new THREE.Vector3(3, 3.5, -42), '#ff6a5a', 160, false, 0.05);
   // ogólne oświetlenie hali (ciemne, czerwonawe)
   add(new THREE.HemisphereLight('#3a1a1c', '#050304', 0.55));
   const redWash = add(new THREE.PointLight('#ff1a1a', 30, 30, 1.6)); redWash.position.set(0, 6, -36);
@@ -333,9 +333,9 @@ export async function createGym(canvas: HTMLCanvasElement, assets: GymAssets, op
 
   /* ---------- WORKI TRENINGOWE ---------- */
   const bags: { g: THREE.Group; phase: number; amp: number }[] = [];
-  const bagBand = track(textTex([{ text: 'BAŁAGAN TEAM', font: '86px Anton, Impact, sans-serif', color: '#e9eaee', y: 64 }], 1024, 128, '#0f0d0e'));
+  const bagBand = track(textTex([{ text: 'BAŁAGAN TEAM', font: '86px Anton, Impact, sans-serif', color: '#a9acb2', y: 64 }], 1024, 128, '#0f0d0e'));
   bagBand.wrapS = THREE.RepeatWrapping; bagBand.repeat.set(2, 1);
-  const bagSide = track(new THREE.MeshPhysicalMaterial({ map: bagBand, roughness: 0.4, clearcoat: 0.5 }));
+  const bagSide = track(new THREE.MeshPhysicalMaterial({ map: bagBand, roughness: 0.55, clearcoat: 0.2 }));
   for (let z = -8; z >= -34; z -= 6.5) {
     for (const dx of [0, -1.4]) {
       const g = new THREE.Group(); g.position.set(9 + dx, HH - 1.0, z + (dx ? 1.8 : 0)); add(g);
@@ -365,7 +365,7 @@ export async function createGym(canvas: HTMLCanvasElement, assets: GymAssets, op
     ], 2048, 512, undefined, g => { g.fillStyle = 'rgba(227,19,28,.85)'; g.fillRect(560, 330, 928, 14); })),
     transparent: true, roughness: 0.9,
   }))));
-  motto.rotation.y = -Math.PI / 2; motto.position.set(11.95, 6.6, -21);
+  motto.rotation.y = Math.PI / 2; motto.position.set(-11.95, 7.2, -17); motto.scale.setScalar(0.8);
 
   /* ---------- ekrany ze zdjęciami (lewa ściana) ---------- */
   const screens: THREE.Mesh[] = [];
@@ -413,6 +413,32 @@ export async function createGym(canvas: HTMLCanvasElement, assets: GymAssets, op
   }))));
   sponsorLabel.position.set(0, 2.55, HZ1 + 0.06);
 
+  /* ---------- prawa ściana: duże podświetlane tablice sponsorów ---------- */
+  const panelMat = track(new THREE.MeshStandardMaterial({ color: '#141114', roughness: 0.4, metalness: 0.55 }));
+  const panelFace = track(new THREE.MeshStandardMaterial({ color: '#0b090a', roughness: 0.8 }));
+  const stripe = track(new THREE.MeshStandardMaterial({ color: '#e3131c', emissive: '#e3131c', emissiveIntensity: 0.6, roughness: 0.4 }));
+  const tagTex = (txt: string, col: string) => track(textTex([{ text: txt, font: '700 70px "Barlow Condensed", sans-serif', color: col, y: 52 }], 1024, 100));
+  partnerTex.forEach((t, i) => {
+    const main = i === 0;
+    const pw = main ? 5.4 : 4.4, ph = main ? 3.0 : 2.5;
+    const others = [-5.4, -10.4, -15.4, -26.6, -31.6, -36.6];
+    const z = main ? -21 : others[(i - 1) % others.length];
+    const y = main ? 5.5 : 5.4;
+    const box = add(new THREE.Mesh(track(new THREE.BoxGeometry(0.2, ph + 0.2, pw + 0.2)), panelMat)); box.position.set(HW - 0.12, y, z);
+    const face = add(new THREE.Mesh(track(new THREE.PlaneGeometry(pw, ph)), panelFace)); face.rotation.y = -Math.PI / 2; face.position.set(HW - 0.23, y, z);
+    const bar = add(new THREE.Mesh(track(new THREE.BoxGeometry(0.06, 0.06, pw + 0.2)), stripe)); bar.position.set(HW - 0.24, y - ph / 2 - 0.13, z);
+    const tag = add(new THREE.Mesh(track(new THREE.PlaneGeometry(3.2, 0.32)), track(new THREE.MeshBasicMaterial({ map: tagTex(main ? 'SPONSOR GŁÓWNY' : 'PARTNER KLUBU', main ? '#ff4a3d' : '#9a9ca3'), transparent: true }))));
+    tag.rotation.y = -Math.PI / 2; tag.position.set(HW - 0.24, y + ph / 2 + 0.32, z);
+    if (!t) return;
+    const img = t.image as { width: number; height: number };
+    const ar = img.width / img.height;
+    let w = pw * 0.84, h = w / ar; if (h > ph * 0.78) { h = ph * 0.78; w = h * ar; }
+    const logo = add(new THREE.Mesh(track(new THREE.PlaneGeometry(w, h)), track(new THREE.MeshStandardMaterial({ map: t, transparent: true, emissiveMap: t, emissive: '#ffffff', emissiveIntensity: 0.85, roughness: 0.6 }))));
+    logo.rotation.y = -Math.PI / 2; logo.position.set(HW - 0.26, y, z);
+  });
+  // miękkie światło na ścianę sponsorów
+  const sponsorWash = add(new THREE.SpotLight('#ffe0d0', 90, 30, 1.0, 0.85, 1.2)); sponsorWash.position.set(4, HH - 1.5, -19); sponsorWash.target.position.set(HW, 5.4, -19); add(sponsorWash.target);
+
   /* ---------- kurz w świetle ---------- */
   const dustCount = mobile ? 700 : 1800;
   const dGeo = track(new THREE.BufferGeometry());
@@ -421,7 +447,7 @@ export async function createGym(canvas: HTMLCanvasElement, assets: GymAssets, op
   for (let i = 0; i < dustCount; i++) { dPos[i * 3] = rnd(-11, 11); dPos[i * 3 + 1] = rnd(0.2, 8); dPos[i * 3 + 2] = rnd(-41, -1); dSeed[i] = Math.random() * 100; }
   dGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
   const dustTex = (() => { const [c, g] = cv(64, 64); const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(255,240,220,1)'); gr.addColorStop(1, 'rgba(255,240,220,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return track(new THREE.CanvasTexture(c)); })();
-  const dust = add(new THREE.Points(dGeo, track(new THREE.PointsMaterial({ map: dustTex, size: 0.06, transparent: true, opacity: 0.75, depthWrite: false, blending: THREE.AdditiveBlending, color: '#ffd9c0' }))));
+  const dust = add(new THREE.Points(dGeo, track(new THREE.PointsMaterial({ map: dustTex, size: 0.06, transparent: true, opacity: 0.45, depthWrite: false, blending: THREE.AdditiveBlending, color: '#ffd9c0' }))));
 
   /* ======================= KAMERA ======================= */
   // klatki: [czas, pozycja, cel]
@@ -434,8 +460,8 @@ export async function createGym(canvas: HTMLCanvasElement, assets: GymAssets, op
     [0.47, new THREE.Vector3(-5.8, 2.4, -16), new THREE.Vector3(0, 1.4, -22)],
     [0.55, new THREE.Vector3(-6.6, 2.1, -25.5), new THREE.Vector3(0, 1.5, -22)],
     [0.61, new THREE.Vector3(-5.6, 2.6, -14.5), new THREE.Vector3(2, 1.6, -22)],
-    [0.67, new THREE.Vector3(4.8, 2.0, -13), new THREE.Vector3(9, 1.9, -24)],
-    [0.76, new THREE.Vector3(5.2, 1.7, -32), new THREE.Vector3(9, 2.1, -19)],
+    [0.67, new THREE.Vector3(4.2, 2.7, -8.5), new THREE.Vector3(12, 5.3, -14)],
+    [0.76, new THREE.Vector3(3.9, 2.9, -30), new THREE.Vector3(12, 5.4, -22)],
     [0.86, new THREE.Vector3(-2, 2.2, -30), new THREE.Vector3(-11, 4, -18)],
     [1.0, new THREE.Vector3(0, 2.3, -31.5), new THREE.Vector3(0, 3.4, -42)],
   ];
@@ -454,7 +480,7 @@ export async function createGym(canvas: HTMLCanvasElement, assets: GymAssets, op
   if (!mobile) {
     composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
-    bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.5, 0.4, 0.93);
+    bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.28, 0.35, 0.97);
     composer.addPass(bloom);
     composer.addPass(new OutputPass());
   }
