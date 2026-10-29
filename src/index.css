@@ -289,3 +289,8 @@ input, select, textarea, button { font: inherit; }
   .scan-in .scan-line { animation: none; }
   .ed-wipe { animation: none; }
 }
+
+/* podpowiedź przewijania (Wejdź do klubu) */
+@keyframes bt-scroll-dot { 0% { transform: translate(-50%, 0); opacity: 1; } 70% { transform: translate(-50%, 14px); opacity: 0; } 100% { transform: translate(-50%, 0); opacity: 0; } }
+.bt-scroll-dot { animation: bt-scroll-dot 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .bt-scroll-dot { animation: none; } }

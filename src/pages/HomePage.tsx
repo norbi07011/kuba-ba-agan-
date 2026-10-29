@@ -6,6 +6,7 @@ import { Embers, Garment3D } from '../components/fx/Wear';
 import { GARMENTS } from '../data/apparel';
 import { SectionTitle } from '../components/sections/PageHeader';
 import { PartnersShowcase } from '../components/sections/PartnersShowcase';
+import { GymWalk } from '../components/sections/GymWalk';
 import { Reveal, TiltCard, CountUp } from '../components/fx/ScrollFx';
 import { MagneticLink, MagneticButton } from '../components/fx/Kinetic';
 import { Duo, HScroll, ImageReveal, LineReveal, ScrollWords } from '../components/fx/Premium';
@@ -268,6 +269,7 @@ const FinalCta: React.FC<PageProps> = ({ go }) => (
 export const HomePage: React.FC<PageProps & { introPending: boolean }> = ({ go, introPending }) => (
   <>
     <Hero onNav={id => go(id as PageId)} introPending={introPending} />
+    <GymWalk onSignup={() => { setSignupMode('self'); go('zapisy'); }} onSchedule={() => go('grafik')} />
     <PromoStrip onMore={() => go('sprzet')} />
     <Manifest />
     <DisciplineRail go={go} />
